@@ -6,7 +6,7 @@ const defaultState = {
     {id: "4", title: 'Tide Pods', url: `http://knowyourmeme.com/memes/tide-pod-challenge`},
     {id: "5", title: 'Whomst', url: `http://knowyourmeme.com/memes/whomst`}
   ],
-  oneMeme: []
+  oneMeme: [],
 };
 
 export default (state = defaultState, action) => {
@@ -24,6 +24,11 @@ export default (state = defaultState, action) => {
           oneMeme: theOne[0]
         });
       } else {
+        return newState;
+      }
+      case "ADD_ONE": {
+        const newMeme = {id: (newState.allMemes.length + 1).toString(), comments: [], ...action.meme};
+        newState.allMemes = [...newState.allMemes, newMeme];
         return newState;
       }
     default:

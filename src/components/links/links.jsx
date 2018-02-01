@@ -1,27 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 import LinkList from './linklist';
 import SingleLink from './singlelink';
+import NewLink from './newlink';
 
-const Links = ({ state, getAllLinks, getSingleLink }) => {
+const Links = ({ linksState, commentsState, getSingleLink, addLink, getAllComments, addComment }) => {
   const renderLinkList = () => {
     return (
-      <LinkList state={state} getAllLinks={getAllLinks} />
+      <LinkList linksState={linksState} />
     )
   }
 
   const renderSingleLink = (props) => {
     const { id } = props.match.params;
     return (
-      <SingleLink state={state} getSingleLink={getSingleLink} id={id} />
+      <SingleLink 
+        linksState={linksState} 
+        commentsState={commentsState}
+        getSingleLink={getSingleLink} 
+        getAllComments={getAllComments}
+        addComment={addComment}
+        id={id} 
+      />
     )
   }
 
   return (
-    <div>
+    <Switch>
       <Route exact path='/links' render={renderLinkList} />
+      <Route exact path='/links/new' render={() => <NewLink addLink={addLink} />} />
       <Route path='/links/:id' render={renderSingleLink} />
-    </div>
+    </Switch>
   )
 }
 

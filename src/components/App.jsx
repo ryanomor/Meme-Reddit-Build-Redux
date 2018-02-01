@@ -10,7 +10,8 @@ const App = () => {
     <div className="App">
       <nav>
         <Link to='/'>Home</Link> {" "}
-        <Link to='/links'>All Links</Link>
+        <Link to='/links'>All Links</Link> {" "}
+        <Link to='/links/new'>Add Meme</Link>
       </nav>
 
       <h2> 💯🔥🙏👌 Meme-ddit 👌🙏🔥💯 </h2>
