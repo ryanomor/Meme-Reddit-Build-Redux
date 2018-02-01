@@ -1,41 +1,44 @@
 const defaultState = {
-    allMemes: [
+    allComments: [
       {id: "1", title: 'Slender Man', comments: [{id: "1", comment: "Scarier than Freddy on Elm St.?"}, {id: "2", comment: "He looks more hilarious than frightening"}]},
-      {id: "2", title: 'Doge', comments: [{id: "1", comment: "" }]},
-      {id: "3", title: 'Arrow in the Knee', comments: [{id: "1", comment: ""}]},
+      {id: "2", title: 'Doge', comments: []},
+      {id: "3", title: 'Arrow in the Knee', comments: []},
       {id: "4", title: 'Tide Pods', comments: [{id: "1", comment: "When I was a kid, we had to eat the powder detergent"}]},
-      {id: "5", title: 'Whomst', comments: [{id: "1", comment: ""}]},
+      {id: "5", title: 'Whomst', comments: []},
     ],
-    oneMeme: [],
+    oneComment: [],
   };
 
 export default (state = defaultState, action) => {
 
     switch (action.type) {
         case "SHOW_COMMENTS": 
-            const theOne = state.allMemes.find((meme) => meme.id === action.id);
+            const theOne = state.allComments.find((meme) => meme.id === action.id);
 
             if (theOne) {
                 return ({
-                allMemes: state.allMemes,
-                oneMeme: theOne
+                allComments: state.allComments,
+                oneComment: theOne
                 });
             } else {
-                return { oneMeme: { comments: [{id: "1", comment: "No comments..."}] } };
+                return { 
+                    allComments: [...state.allComments, { id: (state.allComments.length + 1).toString(), title: action.title, comments: [] }],
+                    oneComment: { comments: [{id: "1", comment: "No comments..."}] }
+                 };
             }
         case "ADD_COMMENT": {
             const newState = state;
-            const meme = newState.allMemes.find(meme => meme.id === action.meme.id);
+            const meme = newState.allComments.find(meme => meme.id === action.meme.id);
             if (meme) {
                 const newComment = {id: (meme.comments.length + 1).toString() , comment: action.newComment};
                 meme.comments = [...meme.comments, newComment];
                 return newState;
             } else {
-                const newMeme = {id: (newState.allMemes.length + 1).toString(), title: action.meme.title, comments: [{id: "1", comment: action.newComment}]};
-                newState.allMemes = [...newState.allMemes, newMeme];
+                const newMeme = {id: (newState.allComments.length + 1).toString(), title: action.meme.title, comments: [{id: "1", comment: action.newComment}]};
+                newState.allComments = [...newState.allComments, newMeme];
                 return newState;
             };
-            // const newState = state.allMemes.map(comment => {
+            // const newState = state.allComments.map(comment => {
             //     if (comment.title === action.title) {
             //         const newComment = {id: (comment.comments.length + 1).toString() , comment: action.newComment};
             //         comment.comments = [...comment.comments, newComment];
