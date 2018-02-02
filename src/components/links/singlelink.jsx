@@ -11,7 +11,7 @@ class SingleLink extends Component {
     };
   };
   
-  componentDidMount () {
+  componentDidMount() {
     this.props.getSingleLink(this.props.id);
     this.props.getAllComments(this.props.id);
   };
@@ -21,6 +21,7 @@ class SingleLink extends Component {
     this.setState({
       showComments: !showComments,
       addComment: false,
+      submitted: false,
     });
   };
 
@@ -55,7 +56,7 @@ class SingleLink extends Component {
 
   render () {
     const { showComments, addComment, submitted, newComment } = this.state;
-    const comments = this.props.commentsState.oneMeme.comments;
+    const comments = this.props.commentsState.oneComment.comments;
     return (
       <div>
         <h3>{this.props.linksState.oneMeme.title}</h3>
@@ -68,11 +69,15 @@ class SingleLink extends Component {
         {submitted ? <p style={{color: "green"}}>Successfully submitted</p> : submitted }
         {showComments 
           ? <ul style={{listStyle: "none"}}>
-              {comments.map(comment => 
-                <li>
-                  <textarea cols="30" rows="5" disabled="true">{comment.comment}</textarea>
-                </li>
-              )}
+              {comments.length > 0 
+                ? comments.map(comment => 
+                    <li>
+                      <textarea cols="30" rows="5" disabled="true">{comment.comment}</textarea>
+                    </li>
+                  )
+              : <li>
+                  <textarea cols="30" rows="5" disabled="true">No comments...</textarea>
+                </li>}
             </ul>
           : showComments}
           <br />
