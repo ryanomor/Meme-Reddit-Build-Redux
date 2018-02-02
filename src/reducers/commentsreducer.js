@@ -21,9 +21,10 @@ export default (state = defaultState, action) => {
                 oneComment: theOne
                 });
             } else {
+                const newMeme = { id: (state.allComments.length + 1).toString(), title: action.title, comments: [] };
                 return { 
-                    allComments: [...state.allComments, { id: (state.allComments.length + 1).toString(), title: action.title, comments: [] }],
-                    oneComment: { comments: [{id: "1", comment: "No comments..."}] }
+                    allComments: [...state.allComments, newMeme],
+                    oneComment: newMeme
                  };
             }
         case "ADD_COMMENT": {
